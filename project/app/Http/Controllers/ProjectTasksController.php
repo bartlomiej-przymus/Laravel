@@ -8,14 +8,37 @@ use App\Project;
 
 class ProjectTasksController extends Controller
 {
-    public function update(Task $task)
-    {
-       $task->update([
-        'completed' => request()->has('completed')
-       ]);
+    // public function update(Task $task)
+    // {
+    //    Another approach is to conditionaly determine which of the new methods to call basing on the value of
+    // request (long form)
+    // if (request()->has('completed')) {
+    //     $task->complete();
+    // } else {
+    //     $task->incomplete();
+    // }
 
-       return back();
-    }
+    //same as above but shorter
+    //request()->has('completed') ? $task->complete() : $task->incomplete();
+
+    //last option is to set the method
+
+    // $method = request()->has('completed') ? 'complete' : 'incomplete';
+
+    // $task->method();
+
+    //    In this approach we call to new mwthod on task model let it deal with database
+    //   operations we just passing the values along
+    //    $task->complete(request()->has('completed'));
+
+    //    In this approach we taking care of everything we are grabbing
+    // request calling method setting property we micromanage
+    //    $task->update([
+    //     'completed' => request()->has('completed')
+    //    ]);
+
+    //    return back();
+    // }
 
     public function store(Project $project)
     {
