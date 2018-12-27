@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
-    <style type="text/css">body { padding-top: 40px;}</style>
+    <style type="text/css">body { padding-top: 40px;} .is-complete{text-decoration: line-through;}</style>
 </head>
 <body>
     <div class="container">

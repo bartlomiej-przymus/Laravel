@@ -36,3 +36,7 @@ Route::get('/', function () {
 //and shortcut to all 7 operations is to create route like this it contains all of the above automatically
 
 Route::resource('projects', 'ProjectsController');
+
+Route::patch('/tasks/{task}', 'ProjectTasksController@update');
+Route::post('/projects/{project}/tasks', 'ProjectTasksController@store');
+Route::delete('/projects/{project}/tasks', 'ProjectTasksController@destroy');
