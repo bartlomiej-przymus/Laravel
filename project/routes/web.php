@@ -37,7 +37,9 @@ Route::get('/', function () {
 
 Route::resource('projects', 'ProjectsController');
 
-Route::patch('/tasks/{task}', 'ProjectTasksController@update');
+// since we created controller we don't need route to patch it with old one
+// Route::patch('/tasks/{task}', 'ProjectTasksController@update');
+
 Route::post('/projects/{project}/tasks', 'ProjectTasksController@store');
 Route::delete('/projects/{project}/tasks', 'ProjectTasksController@destroy');
 
