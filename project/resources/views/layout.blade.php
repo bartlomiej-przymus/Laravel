@@ -10,7 +10,26 @@
 </head>
 <body>
     <div class="container">
+            <nav class="navbar is-black" role="navigation" aria-label="main navigation">
+                    <div class="navbar-brand">
+                         <a class="navbar-item" href="#">
+                        <!--<img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">-->
+                        </a>
+                    </div>
+                    <div id="navbarBasicExample" class="navbar-menu">
+                        <div class="navbar-start">
+                            <a class="navbar-item" href="/projects">
+                                Projects
+                            </a>
+                            <a class="navbar-item" href="/projects/create">
+                                Create Project
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+                <div class="box">
         @yield('content')
+    </div>
     </div>
 </body>
 </html>

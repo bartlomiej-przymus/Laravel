@@ -1,12 +1,12 @@
 @extends('layout')
 @section('content')
-    <h1>Projects</h1>
-    <ul></ul>
+    <h1 class="title">Projects</h1>
+    <ul class="content">
     @foreach ($projects as $project)
         <li>
-            <a href="/projects/{{$project->id}}">
+            <h4 class="is-small"><a href="/projects/{{$project->id}}" class="link">
                 {{ $project->title }}
-            </a>
+            </a></h4>
         </li>
     @endforeach
     </ul>
