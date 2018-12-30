@@ -18,6 +18,7 @@
             <textarea name="description" class="textarea">{{ $project->description }}</textarea>
             </div>
         </div>
+        @include('errors')
         <div class="field">
             <div class="control">
                 <button type="submit" class="button is-link">Update Project</button>

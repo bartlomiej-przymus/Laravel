@@ -20,13 +20,22 @@ class ProjectsController extends Controller
         //auth()->guest() checks if current user is guest [boolean]
         //if (auth()->guest()) {then do following}
 
-        $projects = Project::where('owner_id', auth()->id())->get(); // eloquent query for database: select * from projects where owner_id = 4
+        //refactoring to:
+        $projects = auth()->user()->projects;
+        
+        //old entry before refactoring
+        //$projects = Project::where('owner_id', auth()->id())->get(); // eloquent query for database: select * from projects where owner_id = 4
         
         //$projects = Project::all(); query the model for data notice we use project now instead /App/Project
-        //return view('projects.index', ['projects' => $project]); //passing variable to our view 2 ways same result
+        //return view('projects.index', ['projects' => $projects]); //passing variable to our view 2 ways same result
         //dump($projects);
         
         return view('projects.index', compact('projects'));
+
+        //another way to write  both lines together would be
+        // return view('projects.index', [
+        //    'projects => auth()->user()->projects'
+        //]);
     }
     public function show(Project $project)
     {
@@ -89,12 +98,21 @@ class ProjectsController extends Controller
     }
     public function update(Project $project)
     {
-        $project->update(request(['title', 'description']));
+        //call to new method to make code more DRY
+        //$project->update(request(['title', 'description']));
+        $project->update($this->validateProject())
         return redirect('/projects');
     }
     public function destroy(Project $project)
     {
         $project->delete();
         return redirect('/projects');
+    }
+    public function validateProject()
+    {
+        return request()->validate([
+            'title' => ['required', 'min:3'],
+            'description' => 'required'
+        ]);
     }
 }
