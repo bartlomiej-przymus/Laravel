@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request; //unused import we just leave it here for now
 use App\Project; // << we pull in project model we created so we donthave to reference it by full path
+use App\Mail\ProjectCreated;
 
 class ProjectsController extends Controller
 {
@@ -23,6 +24,8 @@ class ProjectsController extends Controller
         
         //$projects = Project::all(); query the model for data notice we use project now instead /App/Project
         //return view('projects.index', ['projects' => $project]); //passing variable to our view 2 ways same result
+        //dump($projects);
+        
         return view('projects.index', compact('projects'));
     }
     public function show(Project $project)
@@ -49,6 +52,8 @@ class ProjectsController extends Controller
 
         //regular if statement
         // if($project->owner_id !== auth()->id()) { abort(403);}
+
+        
         
         return view('projects.show', compact('project'));
     }
@@ -67,7 +72,15 @@ class ProjectsController extends Controller
         $attributes['owner_id'] = auth()->id();
         //or say Project::create($attributes + ['owner_id' => auth()->id()]);
         // OR WE CAN USE ELOQUENT RELATIONSHIPS
-        Project::create($attributes);
+        // 
+        $project = Project::create($attributes);
+
+        \Mail::to('bartlomiej.przymus@gmail.com')->send(
+            
+            new ProjectCreated($project)
+        
+        );
+
         return redirect('/projects');
     }
     public function edit(Project $project)
