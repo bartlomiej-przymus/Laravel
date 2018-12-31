@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\Mail\ProjectCreated;
-use Illuminate\Support\Facades\Mail;
+//use App\Mail\ProjectCreated;
+//use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -19,16 +19,27 @@ class Project extends Model
     //we are overriding parents boot method and insert our model hook that fires at project creation event
     //we need to make sore to bring in parent boot methot first  then we use created helper method to hook into event
     //since we use Mail facade we need to import it at the top and import ProjectCreated MailableClass path.
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::created(function ($project) {
-            Mail::to($project->owner->email)->send(
-                new ProjectCreated($project)
-            );
-        });
-    }
+    //     static::created(function ($project) {
+    //         Mail::to($project->owner->email)->send(
+    //             new ProjectCreated($project)
+    //         );
+    //     });
+    // }
+    // we are moving this logic to event listener now :)
+
+    //There is third method to map built in Eloquent created event to event we want to triger at creation of our project
+    //by doing so
+
+    // protected $dispatchesEvents = [
+    //     'created' => ProjectCreated::class
+    // ];
+
+    // now there is no need to fire custom event in the controller and all the logic will be hidden witch will 
+    // make it harder to debug
 
     public function tasks()
     {

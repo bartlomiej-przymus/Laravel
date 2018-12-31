@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request; //unused import we just leave it here for now
 use App\Project; // << we pull in project model we created so we donthave to reference it by full path
-use App\Mail\ProjectCreated;
-use Illuminate\Support\Facades\Mail;
+//use App\Mail\ProjectCreated;
+use App\Events\ProjectCreated; //we need to import event to use it later
+//use Illuminate\Support\Facades\Mail;
 
 class ProjectsController extends Controller
 {
@@ -94,6 +95,11 @@ class ProjectsController extends Controller
         // Mail::to($project->owner->email)->send(
         //     new ProjectCreated($project)
         // );
+
+        //next on menu is custom events that can be triggered here to sen that email
+        event(new ProjectCreated($project));
+        //this event function is used to make an announcement throughout our entire system
+        //and now anywhere you can listen to that event hook in and respond with any kind of side effect that you need
 
         return redirect('/projects');
     }
