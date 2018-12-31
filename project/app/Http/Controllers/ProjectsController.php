@@ -90,9 +90,10 @@ class ProjectsController extends Controller
         // );
         //above example was hardcoded now lets do this proper way
 
-        Mail::to($project->owner->email)->send(
-            new ProjectCreated($project)
-        );
+        //we can move this to project model too
+        // Mail::to($project->owner->email)->send(
+        //     new ProjectCreated($project)
+        // );
 
         return redirect('/projects');
     }
