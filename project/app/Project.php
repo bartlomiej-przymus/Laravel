@@ -15,6 +15,12 @@ class Project extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function addTask($task)
     {
         //taking advantage of relationship defined above with eloquent

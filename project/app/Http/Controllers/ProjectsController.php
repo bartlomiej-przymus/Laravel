@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request; //unused import we just leave it here for now
 use App\Project; // << we pull in project model we created so we donthave to reference it by full path
 use App\Mail\ProjectCreated;
+use Illuminate\Support\Facades\Mail;
 
 class ProjectsController extends Controller
 {
@@ -81,13 +82,16 @@ class ProjectsController extends Controller
         $attributes['owner_id'] = auth()->id();
         //or say Project::create($attributes + ['owner_id' => auth()->id()]);
         // OR WE CAN USE ELOQUENT RELATIONSHIPS
-        // 
+        // check how to do this !!!!!!!!!
         $project = Project::create($attributes);
 
-        \Mail::to('bartlomiej.przymus@gmail.com')->send(
-            
+        // Mail::to('bartlomiej.przymus@gmail.com')->send(  
+        //     new ProjectCreated($project)
+        // );
+        //above example was hardcoded now lets do this proper way
+
+        Mail::to($project->owner->email)->send(
             new ProjectCreated($project)
-        
         );
 
         return redirect('/projects');
@@ -100,7 +104,8 @@ class ProjectsController extends Controller
     {
         //call to new method to make code more DRY
         //$project->update(request(['title', 'description']));
-        $project->update($this->validateProject())
+
+        $project->update($this->validateProject());
         return redirect('/projects');
     }
     public function destroy(Project $project)
@@ -108,7 +113,7 @@ class ProjectsController extends Controller
         $project->delete();
         return redirect('/projects');
     }
-    public function validateProject()
+    protected function validateProject()
     {
         return request()->validate([
             'title' => ['required', 'min:3'],
